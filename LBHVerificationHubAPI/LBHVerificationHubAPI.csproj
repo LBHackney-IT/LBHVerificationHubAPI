@@ -70,7 +70,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="LBHTemplateAPI.xml">
+    <None Update="LBHVerificationHubAPI.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

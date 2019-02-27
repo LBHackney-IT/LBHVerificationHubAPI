@@ -9,7 +9,7 @@ using System.Threading;
 using LBHVerificationHubAPI.UseCases.V1.Search.Models;
 using LBHVerificationHubAPI.Infrastructure.V1.Exceptions;
 
-namespace LBHVerificationHubAPI.UseCases.V1.es
+namespace LBHVerificationHubAPI.UseCases.V1.Objects
 {
     public class GetUseCase : IGetUseCase
     {

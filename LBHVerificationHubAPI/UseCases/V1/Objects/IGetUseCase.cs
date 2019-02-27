@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LBHVerificationHubAPI.UseCases.V1.es
+namespace LBHVerificationHubAPI.UseCases.V1.Objects
 {
     public interface IGetUseCase : IRawUseCaseAsync<GetRequest, SearchResponse>
     {

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using LBHVerificationHubAPI.UseCases.V1.es;
+using LBHVerificationHubAPI.UseCases.V1.Objects;
 using LBHVerificationHubAPI.Models;
 using LBHVerificationHubAPI.Infrastructure.V1.API;
 using LBHVerificationHubAPI.Extensions.Controller;

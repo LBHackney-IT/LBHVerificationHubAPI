@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LBHVerificationHubAPI", "LBHVerificationHubAPI\LBHVerificationHubAPI.csproj", "{49B2E790-605A-4AAE-9E58-7D739EE06B38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LBHVerificationHubAPITest", "LBHVerificationHubAPITest\LBHVerificationHubAPITest.csproj", "{C684F00F-D383-49A6-B40F-C96F1DAEA156}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{49B2E790-605A-4AAE-9E58-7D739EE06B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49B2E790-605A-4AAE-9E58-7D739EE06B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49B2E790-605A-4AAE-9E58-7D739EE06B38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C684F00F-D383-49A6-B40F-C96F1DAEA156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C684F00F-D383-49A6-B40F-C96F1DAEA156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C684F00F-D383-49A6-B40F-C96F1DAEA156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C684F00F-D383-49A6-B40F-C96F1DAEA156}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

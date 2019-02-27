@@ -10,6 +10,6 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-CMD ASPNETCORE_URLS=http://+:${PORT:-80} dotnet ./out/LBHTemplateAPI.dll
+CMD ASPNETCORE_URLS=http://+:${PORT:-80} dotnet ./out/LBHVerificationHubAPI.dll
 
 EXPOSE ${PORT:-80}
