@@ -64,7 +64,7 @@ namespace LBHVerificationHubAPI
                     {"Token", Enumerable.Empty<string>()}
                 });
 
-                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "LBH Template API", Version = "v1" });
+                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "LBH Verification Hub API", Version = "v1" });
 
                 c.DescribeAllEnumsAsStrings();
 
@@ -93,7 +93,7 @@ namespace LBHVerificationHubAPI
             // don't use preceding slash in endpoint path
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("v1/swagger.json", "Hackney es API v1");
+                c.SwaggerEndpoint("v1/swagger.json", "Hackney Verification Hub API v1");
                 c.RoutePrefix = "swagger";
             });
 
