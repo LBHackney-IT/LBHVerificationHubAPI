@@ -39,7 +39,7 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
                 return new ParkingPermitVerificationCreateResponse();
             var useCaseResponse = new ParkingPermitVerificationCreateResponse
             {
-                lbhObjects = new List<LBHObject> { response }
+                //lbhObjects = new List<LBHObject> { response }
             };
 
 

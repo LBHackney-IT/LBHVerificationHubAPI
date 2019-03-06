@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
 {
     public class ParkingPermitVerificationCreateResponse 
-    {
-        [JsonProperty("modelname")]
-        public List<LBHObject> lbhObjects { get; set; }
+    {  
+        public bool Verified { get; set; }
+
+        public string VerificationAuditID { get;set; }
       
     }
 }
