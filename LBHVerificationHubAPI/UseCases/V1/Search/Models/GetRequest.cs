@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
 {
-    public class GetRequest : IRequest
+    public class ParkingPermitVerificationCreateRequest : IRequest
     {
         /// <summary>
         /// Exact match
@@ -25,8 +25,8 @@ namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
         {
             if (request == null)
                 return new RequestValidationResponse(false, "request is null");
-            var validator = new GetRequestValidator();
-            var castedRequest = request as GetRequest;
+            var validator = new ParkingPermitVerificationRequestRequestValidator();
+            var castedRequest = request as ParkingPermitVerificationCreateRequest;
             if (castedRequest == null)
                 return new RequestValidationResponse(false);
             var validationResult = validator.Validate(castedRequest);

@@ -5,40 +5,36 @@ using LBHVerificationHubAPI.Models;
 using LBHVerificationHubAPI.Infrastructure.V1.API;
 using LBHVerificationHubAPI.Extensions.Controller;
 using LBHVerificationHubAPI.UseCases.V1.Search.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace LBHVerificationHubAPI.Controllers.V1
 {
     [ApiVersion("1")]
     [Produces("application/json")]
-    [Route("api/v1/path")]
+    [Route("api/v1/verificationhub/parkingpermitverification/")]
     [ProducesResponseType(typeof(APIResponse<object>), 400)]
     [ProducesResponseType(typeof(APIResponse<object>), 500)]
-    public class GetController : BaseController
+    public class PPVerifyController : BaseController
     {
         private readonly IGetUseCase _getUseCase;
 
-        public GetController(IGetUseCase UseCase)
+        public PPVerifyController(IGetUseCase UseCase)
         {
             _getUseCase = UseCase;
         }
 
         /// <summary>
-        /// Returns an  from the given 
+        /// Determines a successful verification for a provided Request 
         /// </summary>
-        /// <param name="ID"></param>
         /// <returns></returns>
-        [HttpGet, MapToApiVersion("1")]
-        [Route("{ID}")]
-        [ProducesResponseType(typeof(APIResponse<SearchResponse>), 200)]
-        public async Task<IActionResult> Get(string ID)
-        {
-            GetRequest request = new GetRequest { ID = ID };
+        [HttpPost]
+        [ProducesResponseType(typeof(APIResponse<ParkingPermitVerificationCreateResponse>), 200)]
+        public async Task<IActionResult> Verify([FromBody][Required]ParkingPermitVerificationCreateRequest request)
+        {            
             var response = await _getUseCase.ExecuteAsync(request, HttpContext.GetCancellationToken()).ConfigureAwait(false);
 
             return HandleResponse(response);
         }
-
-
 
     }
 }

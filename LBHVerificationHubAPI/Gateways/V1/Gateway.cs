@@ -26,7 +26,7 @@ namespace LBHVerificationHubAPI.Gateways.V1
         /// <param name="request"></param> 
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<LBHObject> GetSingleAsync(GetRequest request, CancellationToken cancellationToken)
+        public async Task<LBHObject> GetSingleAsync(ParkingPermitVerificationCreateRequest request, CancellationToken cancellationToken)
         {
             var result = new LBHObject();
 

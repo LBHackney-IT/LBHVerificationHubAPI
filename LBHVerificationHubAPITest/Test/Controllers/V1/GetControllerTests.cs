@@ -16,20 +16,20 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
 {
     public class GetControllerTests
     {
-        private GetController _classUnderTest;
+        private PPVerifyController _classUnderTest;
         private Mock<IGetUseCase> _mock;
 
         public GetControllerTests()
         {
             _mock = new Mock<IGetUseCase>();
-            _classUnderTest = new GetController(_mock.Object);
+            _classUnderTest = new PPVerifyController(_mock.Object);
         }
 
         [Fact]
         public async Task GivenValidRequest_WhenCallingGet_ThenShouldReturn200()
         {
-            _mock.Setup(s => s.ExecuteAsync(It.IsAny<GetRequest>(), CancellationToken.None))
-                .ReturnsAsync(new SearchResponse
+            _mock.Setup(s => s.ExecuteAsync(It.IsAny<ParkingPermitVerificationCreateRequest>(), CancellationToken.None))
+                .ReturnsAsync(new ParkingPermitVerificationCreateResponse
                 {
                     lbhObjects = new List<LBHObject>
                     {
@@ -38,7 +38,7 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
                 });
             var id = "123";
 
-            var response = await _classUnderTest.Get(id).ConfigureAwait(false);
+            var response = await _classUnderTest.Verify(new ParkingPermitVerificationCreateRequest()).ConfigureAwait(false);
 
             response.Should().NotBeNull();
             response.Should().BeOfType<ObjectResult>();
