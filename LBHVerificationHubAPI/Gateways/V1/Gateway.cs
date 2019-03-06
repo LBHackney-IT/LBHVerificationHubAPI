@@ -32,18 +32,7 @@ namespace LBHVerificationHubAPI.Gateways.V1
 
             //TODO: Move the query in to a helper so it's in one place!
             string query = "sql query here";
-            using (var conn = new SqlConnection(_connectionString))
-            {
-                //open connection explicity
-                conn.Open();
-                var all = await conn.QueryAsync<LBHObject>(query,
-                    new { key = request.ID }
-                ).ConfigureAwait(false);
-
-                result = all.FirstOrDefault();
-
-                conn.Close();
-            }
+            
 
             return result;
         }

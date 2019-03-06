@@ -9,10 +9,19 @@ namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
 {
     public class ParkingPermitVerificationCreateRequest : IRequest
     {
-        /// <summary>
-        /// Exact match
-        /// </summary>
-        public string ID { get; set; }
+        public string ForeName { get; set; }
+
+        public string Surname { get; set; }
+
+        public string UPRN { get; set; }
+
+        public string DOB { get; set; }
+
+        public string EmailAddress { get; set; }
+
+        public string TelephoneNumber { get; set; }
+
+
         /// <summary>
         /// Responsible for validating itself.
         /// Uses SearchRequestValidator to do complex validation
