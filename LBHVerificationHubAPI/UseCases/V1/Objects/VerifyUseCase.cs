@@ -14,9 +14,9 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
     public class VerifyUseCase : IVerifyUseCase
     {
 
-        private readonly IGateway _Gateway;
+        private readonly IClearCoreGateway _Gateway;
 
-        public VerifyUseCase(IGateway Gateway)
+        public VerifyUseCase(IClearCoreGateway Gateway)
         {
             _Gateway = Gateway;
         }

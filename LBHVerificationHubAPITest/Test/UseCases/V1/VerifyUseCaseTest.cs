@@ -17,11 +17,11 @@ namespace LBHVerificationHubAPITest.Test.UseCases.V1
     public class VerifyUseCaseTest
     {
         private readonly IVerifyUseCase _classUnderTest;
-        private readonly Mock<IGateway> _fakeGateway;
+        private readonly Mock<IClearCoreGateway> _fakeGateway;
 
         public VerifyUseCaseTest()
         {
-            _fakeGateway = new Mock<IGateway>();
+            _fakeGateway = new Mock<IClearCoreGateway>();
 
             _classUnderTest = new VerifyUseCase(_fakeGateway.Object);
         }

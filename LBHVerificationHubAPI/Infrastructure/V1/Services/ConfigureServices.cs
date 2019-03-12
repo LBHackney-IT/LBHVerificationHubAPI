@@ -10,10 +10,10 @@ namespace LBHVerificationHubAPI.Infrastructure.V1.Services
 {
     public static class ConfigureServices
     {
-        public static void ConfigureSearch(this IServiceCollection services, string connectionString)
+        public static void ConfigureClearCore(this IServiceCollection services, string clearCoreUrl)
         {
             services.AddTransient<UseCases.V1.Objects.IVerifyUseCase, UseCases.V1.Objects.VerifyUseCase>();
-            services.AddTransient<Gateways.V1.IGateway>(s => new Gateways.V1.Gateway(connectionString));
+            services.AddTransient<Gateways.V1.IClearCoreGateway>(s => new Gateways.V1.ClearCoreGateway(clearCoreUrl));
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LBHVerificationHubAPI.Gateways.V1
 {
-    public interface IGateway
+    public interface IClearCoreGateway
     {
         Task<LBHObject> GetSingleAsync(ParkingPermitVerificationRequest request, CancellationToken cancellationToken);
     }

@@ -12,10 +12,10 @@ using LBHVerificationHubAPI.Helpers;
 
 namespace LBHVerificationHubAPI.Gateways.V1
 {
-    public class Gateway : IGateway
+    public class ClearCoreGateway : IClearCoreGateway
     {
         private readonly string _connectionString;
-        public Gateway(string connectionString)
+        public ClearCoreGateway(string connectionString)
         {
             _connectionString = connectionString;
         }
