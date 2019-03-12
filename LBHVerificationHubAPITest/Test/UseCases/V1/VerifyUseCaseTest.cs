@@ -33,6 +33,36 @@ namespace LBHVerificationHubAPITest.Test.UseCases.V1
             await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
         }
 
+        [Fact]
+        public async Task Given_InvalidInput_ThenShouldThrowBadRequestException()
+        {
+            //arrange
+            var request = new ParkingPermitVerificationRequest();
+            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+        }
 
+        [Fact]
+        public async Task Given_No_Forename_ThenShouldThrowBadRequestException()
+        {
+            //arrange
+            var request = new ParkingPermitVerificationRequest() { ForeName="", Surname="surname", UPRN="uprn" };
+            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+        }
+
+        [Fact]
+        public async Task Given_No_Surname_ThenShouldThrowBadRequestException()
+        {
+            //arrange
+            var request = new ParkingPermitVerificationRequest() { ForeName = "forename", Surname = "", UPRN = "uprn" };
+            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+        }
+
+        [Fact]
+        public async Task Given_No_UPRN_ThenShouldThrowBadRequestException()
+        {
+            //arrange
+            var request = new ParkingPermitVerificationRequest() { ForeName = "forename", Surname = "surname", UPRN = "" };
+            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+        }
     }       
 }
