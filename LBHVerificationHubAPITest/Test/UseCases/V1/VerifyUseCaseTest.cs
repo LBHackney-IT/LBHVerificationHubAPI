@@ -16,6 +16,10 @@ namespace LBHVerificationHubAPITest
 {
     public class VerifyUseCaseTest
     {
+        private readonly IVerifyUseCase _classUnderTest;
+        private readonly Mock<IGateway> _fakeGateway;
+
+
     }
        
 }
