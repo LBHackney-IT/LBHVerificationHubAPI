@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace LBHVerificationHubAPITest.Test.Controllers.V1
 {
-    public class GetControllerTests
+    public class PPVerifyControllerTests
     {
         private PPVerifyController _classUnderTest;
         private Mock<IVerifyUseCase> _mock;
 
-        public GetControllerTests()
+        public PPVerifyControllerTests()
         {
             _mock = new Mock<IVerifyUseCase>();
             _classUnderTest = new PPVerifyController(_mock.Object);
