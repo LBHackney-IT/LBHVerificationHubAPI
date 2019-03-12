@@ -39,7 +39,8 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
                 return new ParkingPermitVerificationResponse();
             var useCaseResponse = new ParkingPermitVerificationResponse
             {
-                //lbhObjects = new List<LBHObject> { response }
+                Verified = response.verified,
+                VerificationAuditID = response.VerificationAuditID
             };
 
 
