@@ -11,6 +11,7 @@ using Moq;
 using Xunit;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using LBHVerificationHubAPI.Infrastructure.V1.API;
 
 namespace LBHVerificationHubAPITest.Test.Controllers.V1
 {
@@ -44,6 +45,29 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
             var objectResult = response as ObjectResult;
             objectResult.StatusCode.Should().Be(200);
 
+        }
+
+        [Fact]
+        public async Task GivenValidRequest_WhenCallingVerify_ThenShouldReturnAPIResponse()
+        {
+            //arrange
+            _mock.Setup(s => s.ExecuteAsync(It.IsAny<ParkingPermitVerificationCreateRequest>(), CancellationToken.None))
+                .ReturnsAsync(new ParkingPermitVerificationCreateResponse
+                {
+                    
+                });
+
+            var request = new ParkingPermitVerificationCreateRequest
+            {
+            };
+            //act
+            var response = await _classUnderTest.Verify(request).ConfigureAwait(false);
+            //assert
+            response.Should().NotBeNull();
+            response.Should().BeOfType<ObjectResult>();
+            var objectResult = response as ObjectResult;
+            var apiResponse = objectResult?.Value as APIResponse<ParkingPermitVerificationCreateResponse>;
+            apiResponse.Should().NotBeNull();
         }
 
     }
