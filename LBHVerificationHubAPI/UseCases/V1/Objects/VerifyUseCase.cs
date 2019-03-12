@@ -33,7 +33,7 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
             if (!validationResponse.IsValid)
                 throw new BadRequestException(validationResponse);
 
-            var response = await _Gateway.GetSingleAsync(request, cancellationToken).ConfigureAwait(false);
+            var response = await _Gateway.Verify(request, cancellationToken).ConfigureAwait(false);
 
             if (response == null)
                 return new ParkingPermitVerificationResponse();
