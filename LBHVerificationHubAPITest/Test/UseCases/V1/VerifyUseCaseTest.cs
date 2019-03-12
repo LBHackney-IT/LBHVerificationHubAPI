@@ -26,23 +26,12 @@ namespace LBHVerificationHubAPITest.Test.UseCases.V1
             _classUnderTest = new VerifyUseCase(_fakeGateway.Object);
         }
 
-        //[Fact]
-        //public async Task GivenValidedInput__WhenExecuteAsync_GatewayReceivesCorrectInput()
-        //{
-        //    //arrange
-        //    var tenancyAgreementRef = "Test";
-        //    _fakeGateway.Setup(s => s.veri(It.Is<ParkingPermitVerificationRequest>(i => i.TenancyRef.Equals("Test")), CancellationToken.None))
-        //        .ReturnsAsync(new PagedResults<TenancyListItem>());
-
-        //    var request = new ParkingPermitVerificationRequest
-        //    {
-                
-        //    };
-        //    //act
-        //    await _classUnderTest.ExecuteAsync(request, CancellationToken.None);
-        //    //assert
-        //    _fakeGateway.Verify(v => v.SearchTenanciesAsync(It.Is<ParkingPermitVerificationRequest>(i => i.TenancyRef.Equals("Test")), CancellationToken.None));
-        //}
+        [Fact]
+        public async Task GivenNullInput_WhenExecuteAsync_ThenShouldThrowBadRequestException()
+        {
+            ParkingPermitVerificationRequest request = null;
+            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+        }
 
 
     }       

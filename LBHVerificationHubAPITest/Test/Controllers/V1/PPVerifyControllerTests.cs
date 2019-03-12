@@ -27,7 +27,7 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
         }
 
         [Fact]
-        public async Task GivenValidRequest_WhenCallingGet_ThenShouldReturn200()
+        public async Task GivenValidRequest_WhenCallingVerify_ThenShouldReturn200()
         {
             _mock.Setup(s => s.ExecuteAsync(It.IsAny<ParkingPermitVerificationRequest>(), CancellationToken.None))
                 .ReturnsAsync(new ParkingPermitVerificationResponse
