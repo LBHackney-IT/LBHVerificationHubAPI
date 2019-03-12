@@ -21,7 +21,7 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
             _Gateway = Gateway;
         }
 
-        public async Task<ParkingPermitVerificationCreateResponse> ExecuteAsync(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
+        public async Task<ParkingPermitVerificationResponse> ExecuteAsync(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
         {
 
             //validate
@@ -36,8 +36,8 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
             var response = await _Gateway.GetSingleAsync(request, cancellationToken).ConfigureAwait(false);
 
             if (response == null)
-                return new ParkingPermitVerificationCreateResponse();
-            var useCaseResponse = new ParkingPermitVerificationCreateResponse
+                return new ParkingPermitVerificationResponse();
+            var useCaseResponse = new ParkingPermitVerificationResponse
             {
                 //lbhObjects = new List<LBHObject> { response }
             };

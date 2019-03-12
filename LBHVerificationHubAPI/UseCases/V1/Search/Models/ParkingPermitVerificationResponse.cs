@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
 {
-    public class ParkingPermitVerificationCreateResponse 
+    public class ParkingPermitVerificationResponse 
     {  
         public bool Verified { get; set; }
 

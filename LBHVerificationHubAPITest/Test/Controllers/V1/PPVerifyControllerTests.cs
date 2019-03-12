@@ -30,7 +30,7 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
         public async Task GivenValidRequest_WhenCallingGet_ThenShouldReturn200()
         {
             _mock.Setup(s => s.ExecuteAsync(It.IsAny<ParkingPermitVerificationRequest>(), CancellationToken.None))
-                .ReturnsAsync(new ParkingPermitVerificationCreateResponse
+                .ReturnsAsync(new ParkingPermitVerificationResponse
                 {
                 });
             var request = new ParkingPermitVerificationRequest
@@ -52,7 +52,7 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
         {
             //arrange
             _mock.Setup(s => s.ExecuteAsync(It.IsAny<ParkingPermitVerificationRequest>(), CancellationToken.None))
-                .ReturnsAsync(new ParkingPermitVerificationCreateResponse
+                .ReturnsAsync(new ParkingPermitVerificationResponse
                 {
                     
                 });
@@ -66,7 +66,7 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
             response.Should().NotBeNull();
             response.Should().BeOfType<ObjectResult>();
             var objectResult = response as ObjectResult;
-            var apiResponse = objectResult?.Value as APIResponse<ParkingPermitVerificationCreateResponse>;
+            var apiResponse = objectResult?.Value as APIResponse<ParkingPermitVerificationResponse>;
             apiResponse.Should().NotBeNull();
         }
 
