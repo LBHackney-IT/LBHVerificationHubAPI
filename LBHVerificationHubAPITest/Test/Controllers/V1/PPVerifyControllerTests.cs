@@ -31,14 +31,13 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
             _mock.Setup(s => s.ExecuteAsync(It.IsAny<ParkingPermitVerificationCreateRequest>(), CancellationToken.None))
                 .ReturnsAsync(new ParkingPermitVerificationCreateResponse
                 {
-                    //lbhObjects = new List<LBHObject>
-                    //{
-
-                    //}
                 });
-            var id = "123";
+            var request = new ParkingPermitVerificationCreateRequest
+            {
 
-            var response = await _classUnderTest.Verify(new ParkingPermitVerificationCreateRequest()).ConfigureAwait(false);
+            };
+
+            var response = await _classUnderTest.Verify(request).ConfigureAwait(false);
 
             response.Should().NotBeNull();
             response.Should().BeOfType<ObjectResult>();
