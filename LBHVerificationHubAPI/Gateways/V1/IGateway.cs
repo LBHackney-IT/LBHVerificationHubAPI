@@ -11,6 +11,6 @@ namespace LBHVerificationHubAPI.Gateways.V1
 {
     public interface IGateway
     {
-        Task<LBHObject> GetSingleAsync(ParkingPermitVerificationCreateRequest request, CancellationToken cancellationToken);
+        Task<LBHObject> GetSingleAsync(ParkingPermitVerificationRequest request, CancellationToken cancellationToken);
     }
 }

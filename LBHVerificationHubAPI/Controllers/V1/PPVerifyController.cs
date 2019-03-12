@@ -29,7 +29,7 @@ namespace LBHVerificationHubAPI.Controllers.V1
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(APIResponse<ParkingPermitVerificationCreateResponse>), 200)]
-        public async Task<IActionResult> Verify([FromBody][Required]ParkingPermitVerificationCreateRequest request)
+        public async Task<IActionResult> Verify([FromBody][Required]ParkingPermitVerificationRequest request)
         {            
             var response = await _verifyUseCase.ExecuteAsync(request, HttpContext.GetCancellationToken()).ConfigureAwait(false);
 

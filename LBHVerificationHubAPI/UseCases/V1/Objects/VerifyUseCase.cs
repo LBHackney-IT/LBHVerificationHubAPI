@@ -21,7 +21,7 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
             _Gateway = Gateway;
         }
 
-        public async Task<ParkingPermitVerificationCreateResponse> ExecuteAsync(ParkingPermitVerificationCreateRequest request, CancellationToken cancellationToken)
+        public async Task<ParkingPermitVerificationCreateResponse> ExecuteAsync(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
         {
 
             //validate
