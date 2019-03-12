@@ -14,7 +14,7 @@ using LBHVerificationHubAPI.UseCases.V1.Objects;
 
 namespace LBHVerificationHubAPITest
 {
-    public class GetSingleUseCaseTest
+    public class VerifyUseCaseTest
     {
     }
        
