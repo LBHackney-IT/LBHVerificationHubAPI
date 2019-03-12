@@ -17,11 +17,11 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
     public class GetControllerTests
     {
         private PPVerifyController _classUnderTest;
-        private Mock<IGetUseCase> _mock;
+        private Mock<IVerifyUseCase> _mock;
 
         public GetControllerTests()
         {
-            _mock = new Mock<IGetUseCase>();
+            _mock = new Mock<IVerifyUseCase>();
             _classUnderTest = new PPVerifyController(_mock.Object);
         }
 

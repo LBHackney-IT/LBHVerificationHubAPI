@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LBHVerificationHubAPI.UseCases.V1.Objects
 {
-    public interface IGetUseCase : IRawUseCaseAsync<ParkingPermitVerificationCreateRequest, ParkingPermitVerificationCreateResponse>
+    public interface IVerifyUseCase : IRawUseCaseAsync<ParkingPermitVerificationCreateRequest, ParkingPermitVerificationCreateResponse>
     {
     }
 }

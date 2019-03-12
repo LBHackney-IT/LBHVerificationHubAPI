@@ -11,12 +11,12 @@ using LBHVerificationHubAPI.Infrastructure.V1.Exceptions;
 
 namespace LBHVerificationHubAPI.UseCases.V1.Objects
 {
-    public class GetUseCase : IGetUseCase
+    public class VerifyUseCase : IVerifyUseCase
     {
 
         private readonly IGateway _Gateway;
 
-        public GetUseCase(IGateway Gateway)
+        public VerifyUseCase(IGateway Gateway)
         {
             _Gateway = Gateway;
         }

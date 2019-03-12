@@ -16,11 +16,11 @@ namespace LBHVerificationHubAPI.Controllers.V1
     [ProducesResponseType(typeof(APIResponse<object>), 500)]
     public class PPVerifyController : BaseController
     {
-        private readonly IGetUseCase _getUseCase;
+        private readonly IVerifyUseCase _verifyUseCase;
 
-        public PPVerifyController(IGetUseCase UseCase)
+        public PPVerifyController(IVerifyUseCase VerifyUseCase)
         {
-            _getUseCase = UseCase;
+            _verifyUseCase = VerifyUseCase;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace LBHVerificationHubAPI.Controllers.V1
         [ProducesResponseType(typeof(APIResponse<ParkingPermitVerificationCreateResponse>), 200)]
         public async Task<IActionResult> Verify([FromBody][Required]ParkingPermitVerificationCreateRequest request)
         {            
-            var response = await _getUseCase.ExecuteAsync(request, HttpContext.GetCancellationToken()).ConfigureAwait(false);
+            var response = await _verifyUseCase.ExecuteAsync(request, HttpContext.GetCancellationToken()).ConfigureAwait(false);
 
             return HandleResponse(response);
         }
