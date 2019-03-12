@@ -11,6 +11,6 @@ namespace LBHVerificationHubAPI.Gateways.V1
 {
     public interface IClearCoreGateway
     {
-        Task<LBHObject> Verify(ParkingPermitVerificationRequest request, CancellationToken cancellationToken);
+        Task<ClearCoreResponse> Verify(ParkingPermitVerificationRequest request, CancellationToken cancellationToken);
     }
 }

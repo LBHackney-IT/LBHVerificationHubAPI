@@ -26,9 +26,9 @@ namespace LBHVerificationHubAPI.Gateways.V1
         /// <param name="request"></param> 
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<LBHObject> Verify(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
+        public async Task<ClearCoreResponse> Verify(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
         {
-            var result = new LBHObject();
+            var result = new ClearCoreResponse();
 
             //TODO: Move the query in to a helper so it's in one place!
             string query = "sql query here";
