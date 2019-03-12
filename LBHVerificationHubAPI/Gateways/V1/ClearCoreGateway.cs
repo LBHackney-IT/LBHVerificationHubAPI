@@ -14,10 +14,10 @@ namespace LBHVerificationHubAPI.Gateways.V1
 {
     public class ClearCoreGateway : IClearCoreGateway
     {
-        private readonly string _connectionString;
-        public ClearCoreGateway(string connectionString)
+        private readonly string _clearCoreURL;
+        public ClearCoreGateway(string ClearCoreURL)
         {
-            _connectionString = connectionString;
+            _clearCoreURL = ClearCoreURL;
         }
 
         /// <summary>
@@ -28,21 +28,9 @@ namespace LBHVerificationHubAPI.Gateways.V1
         /// <returns></returns>
         public async Task<ClearCoreResponse> Verify(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
         {
-            var result = new ClearCoreResponse();
-
-            //TODO: return some dummy data for now.
-
-            
-            
-
+            //call the ClearCore web service
+            var result = new ClearCoreResponse() { verified=true, VerificationAuditID=new Guid().ToString() };
             return result;
         }
-
-
-
-
-
-
-
     }
 }
