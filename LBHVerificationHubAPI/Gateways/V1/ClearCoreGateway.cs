@@ -30,8 +30,9 @@ namespace LBHVerificationHubAPI.Gateways.V1
         {
             var result = new ClearCoreResponse();
 
-            //TODO: Move the query in to a helper so it's in one place!
-            string query = "sql query here";
+            //TODO: return some dummy data for now.
+
+            
             
 
             return result;
