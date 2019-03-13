@@ -9,16 +9,23 @@ namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
 {
     public class ParkingPermitVerificationRequest : IRequest
     {
+        
+        [ClearCoreProperty(AlternativeFieldName = "NAME_FORENAME")]
         public string ForeName { get; set; }
 
+        [ClearCoreProperty(AlternativeFieldName = "NAME_SURNAME")]
         public string Surname { get; set; }
 
+        [ClearCoreProperty(AlternativeFieldName = "UPRN")]
         public string UPRN { get; set; }
 
+        [ClearCoreProperty(AlternativeFieldName = "DOB")]
         public string DOB { get; set; }
 
+        [ClearCoreProperty(AlternativeFieldName = "EMAIL")]
         public string EmailAddress { get; set; }
 
+        [ClearCoreProperty(AlternativeFieldName = "TEL")]
         public string TelephoneNumber { get; set; }
 
 
@@ -42,5 +49,10 @@ namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
 
             return new RequestValidationResponse(validationResult);
         }
+    }
+
+    public class ClearCoreProperty : Attribute
+    {
+        public string AlternativeFieldName { get; set; }
     }
 }

@@ -9,14 +9,18 @@ using System.Threading;
 using LBHVerificationHubAPI.UseCases.V1.Search.Models;
 using LBHVerificationHubAPI.Infrastructure.V1.API;
 using LBHVerificationHubAPI.Helpers;
+using ClearCoreService;
 
 namespace LBHVerificationHubAPI.Gateways.V1
 {
     public class ClearCoreGateway : IClearCoreGateway
     {
         private readonly string _clearCoreURL;
-        public ClearCoreGateway(string ClearCoreURL)
+        private readonly IClearCoreSoapChannel _clearCoreSoapChannel;
+
+        public ClearCoreGateway(IClearCoreSoapChannel clearCoreSoapChannel , string ClearCoreURL)
         {
+            _clearCoreSoapChannel = clearCoreSoapChannel;
             _clearCoreURL = ClearCoreURL;
         }
 
@@ -28,9 +32,17 @@ namespace LBHVerificationHubAPI.Gateways.V1
         /// <returns></returns>
         public async Task<ClearCoreResponse> Verify(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
         {
-            //call the ClearCore web service
-            var result = new ClearCoreResponse() { verified=true, VerificationAuditID=new Guid().ToString() };
-            return result;
+            ScvQueryDef queryDefinition = QueryHelper.CreateQueryDefinition(request);
+            
+            ScvQueryResult results = await _clearCoreSoapChannel.ScvQueryRecords2Async(queryDefinition).ConfigureAwait(false);
+            if(_clearCoreSoapChannel.State != System.ServiceModel.CommunicationState.Closed)
+            {
+                _clearCoreSoapChannel.Close();
+            }
+
+            ClearCoreResponse response = QueryHelper.CreateResponse(results);
+
+            return response;
         }
     }
 }
