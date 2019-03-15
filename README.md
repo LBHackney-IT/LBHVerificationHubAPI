@@ -25,8 +25,6 @@ We employ a variant of Clean Architecture, borrowing from [Made Tech Flavoured C
 [TBC]
 ### Release
 
-![Circle CI Workflow Example](docs/circle_ci_workflow.png)
-
 We use a pull request workflow, where changes are made on a branch and approved by one or more other maintainers before the developer can merge into `master`.
 
 Then we have an automated four step deployment process, which runs in CircleCI.
