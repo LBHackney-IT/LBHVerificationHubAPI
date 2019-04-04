@@ -55,9 +55,31 @@ namespace LBHVerificationHubAPI.Helpers
 
         public static ClearCoreResponse CreateResponse(ScvQueryResult results)
         {
+            ClearCoreResponse response = new ClearCoreResponse();
+            
             //Do stuff here to generate a response object from the returned ClearCore results.
+            if(results.Usns.Count() > 0)//at least 1 USN has been returned so we're valid???? This may need to be developed further
+            {
+                response.verified = true;
+                response.VerificationAuditID = SaveAuditDetails(results.m_matchAudits);
+            }
+            else
+            {
+                response.verified = false;
+                response.VerificationAuditID = string.Empty;
+            }
+            
 
-            return new ClearCoreResponse();
+            return response;
+        }
+
+        private static string SaveAuditDetails(string[] m_matchAudits)
+        {
+            //TODO: Save the audit details in to database and return the ID
+            //use SCVXlateMatchAudit to get the better description of the audit
+            //store it in the database and retrieve the ID
+
+            return Guid.NewGuid().ToString();
         }
     }
 }
