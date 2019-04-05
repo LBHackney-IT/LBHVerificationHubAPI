@@ -22,8 +22,7 @@ namespace LBHVerificationHubAPI.Infrastructure.V1.Services
             services.AddTransient<IClearCoreSoapChannel>(s =>
             {
                 var clientFactory = s.GetService<IWCFClientFactory>();
-                //var client = clientFactory.CreateClient<IClearCoreSoapChannel>(Environment.GetEnvironmentVariable("ServiceSettings__ClearCoreServiceEndpoint"));
-                var client = clientFactory.CreateClient<IClearCoreSoapChannel>("http://lbhindexappd01.ad.hackney.gov.uk:8888/ClearCore");
+                var client = clientFactory.CreateClient<IClearCoreSoapChannel>(clearCoreUrl);
                 if (client.State != CommunicationState.Opened)
                     client.Open();
                 return client;
