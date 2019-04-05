@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:59389/",
+      "applicationUrl": "http://localhost:59390/",
       "sslPort": 0
     }
   },
@@ -13,7 +13,9 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ClearCoreWebService": "http://lbhindexappd01.ad.hackney.gov.uk:8888/ClearCore",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ClearCore_SENTRY_URL": "Value"
       }
     },
     "HackneyesAPI": {
