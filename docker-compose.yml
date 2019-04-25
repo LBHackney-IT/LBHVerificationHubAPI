@@ -13,4 +13,4 @@ services:
     image: LBHVerificationHubAPITest
     build:
       context: .
-      dockerfile: LBHAddressesAPITest/Dockerfile
+      dockerfile: LBHVerificationHubAPITest/Dockerfile
