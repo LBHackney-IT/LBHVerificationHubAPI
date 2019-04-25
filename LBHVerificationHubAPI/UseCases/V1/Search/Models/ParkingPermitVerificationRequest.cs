@@ -7,12 +7,28 @@ using System.Threading.Tasks;
 
 namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
 {
-    public class GetRequest : IRequest
+    public class ParkingPermitVerificationRequest : IRequest
     {
-        /// <summary>
-        /// Exact match
-        /// </summary>
-        public string ID { get; set; }
+        
+        [ClearCoreProperty(AlternativeFieldName = "NAME_FIRST_NAME")]
+        public string ForeName { get; set; }
+
+        [ClearCoreProperty(AlternativeFieldName = "NAME_SURNAME")]
+        public string Surname { get; set; }
+
+        [ClearCoreProperty(AlternativeFieldName = "ADDR_POBOX")]
+        public string UPRN { get; set; }
+
+        [ClearCoreProperty(AlternativeFieldName = "DOB")]
+        public string DOB { get; set; }
+
+        [ClearCoreProperty(AlternativeFieldName = "EMAIL")]
+        public string EmailAddress { get; set; }
+
+        [ClearCoreProperty(AlternativeFieldName = "TEL")]
+        public string TelephoneNumber { get; set; }
+
+
         /// <summary>
         /// Responsible for validating itself.
         /// Uses SearchRequestValidator to do complex validation
@@ -25,13 +41,18 @@ namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
         {
             if (request == null)
                 return new RequestValidationResponse(false, "request is null");
-            var validator = new GetRequestValidator();
-            var castedRequest = request as GetRequest;
+            var validator = new ParkingPermitVerificationRequestRequestValidator();
+            var castedRequest = request as ParkingPermitVerificationRequest;
             if (castedRequest == null)
                 return new RequestValidationResponse(false);
             var validationResult = validator.Validate(castedRequest);
 
             return new RequestValidationResponse(validationResult);
         }
+    }
+
+    public class ClearCoreProperty : Attribute
+    {
+        public string AlternativeFieldName { get; set; }
     }
 }

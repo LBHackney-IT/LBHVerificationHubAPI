@@ -41,9 +41,9 @@ namespace LBHVerificationHubAPI
             services.Configure<ConfigurationSettings>(Configuration);
             var settings = Configuration.Get<ConfigurationSettings>();
 
-            var connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+            var clearCoreUrl = Environment.GetEnvironmentVariable("ClearCoreWebService");
 
-            services.ConfigureSearch(connectionString);
+            services.ConfigureClearCore(clearCoreUrl);
 
 
 
@@ -96,8 +96,7 @@ namespace LBHVerificationHubAPI
                 c.SwaggerEndpoint("v1/swagger.json", "Hackney Verification Hub API v1");
                 c.RoutePrefix = "swagger";
             });
-
-            //app.UseCors("AllowAny");
+            
 
             app.UseMvc();
         }

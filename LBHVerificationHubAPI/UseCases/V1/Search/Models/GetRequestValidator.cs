@@ -2,12 +2,14 @@
 
 namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
 {
-    public class GetRequestValidator : AbstractValidator<GetRequest>
+    public class ParkingPermitVerificationRequestRequestValidator : AbstractValidator<ParkingPermitVerificationRequest>
     {
-        public GetRequestValidator()
+        public ParkingPermitVerificationRequestRequestValidator()
         {
             RuleFor(x => x).NotNull();
-
+            RuleFor(x => x.ForeName).NotEmpty();
+            RuleFor(x => x.UPRN).NotEmpty();
+            RuleFor(x => x.Surname).NotEmpty();
         }
     }
 }

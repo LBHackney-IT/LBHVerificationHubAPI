@@ -11,17 +11,17 @@ using LBHVerificationHubAPI.Infrastructure.V1.Exceptions;
 
 namespace LBHVerificationHubAPI.UseCases.V1.Objects
 {
-    public class GetUseCase : IGetUseCase
+    public class VerifyUseCase : IVerifyUseCase
     {
 
-        private readonly IGateway _Gateway;
+        private readonly IClearCoreGateway _Gateway;
 
-        public GetUseCase(IGateway Gateway)
+        public VerifyUseCase(IClearCoreGateway Gateway)
         {
             _Gateway = Gateway;
         }
 
-        public async Task<SearchResponse> ExecuteAsync(GetRequest request, CancellationToken cancellationToken)
+        public async Task<ParkingPermitVerificationResponse> ExecuteAsync(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
         {
 
             //validate
@@ -33,13 +33,14 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
             if (!validationResponse.IsValid)
                 throw new BadRequestException(validationResponse);
 
-            var response = await _Gateway.GetSingleAsync(request, cancellationToken).ConfigureAwait(false);
+            var response = await _Gateway.Verify(request, cancellationToken).ConfigureAwait(false);
 
             if (response == null)
-                return new SearchResponse();
-            var useCaseResponse = new SearchResponse
+                return new ParkingPermitVerificationResponse();
+            var useCaseResponse = new ParkingPermitVerificationResponse
             {
-                lbhObjects = new List<LBHObject> { response }
+                Verified = response.verified,
+                VerificationAuditID = response.VerificationAuditID
             };
 
 

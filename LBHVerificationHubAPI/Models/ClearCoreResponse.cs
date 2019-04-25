@@ -7,10 +7,12 @@ using LBHVerificationHubAPI.Interfaces;
 
 namespace LBHVerificationHubAPI.Models
 {
-    public class LBHObject
+    //holding object until i know what clearcore will return.
+    public class ClearCoreResponse
     {
-        public string ID { get; set; }
+        public bool verified { get; set; }
 
+        public string VerificationAuditID { get; set; }
 
 
     }
