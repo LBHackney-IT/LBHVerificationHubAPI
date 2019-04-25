@@ -18,5 +18,6 @@ COPY . .
 
 RUN dotnet build -c debug -o out ./LBHVerificationHubAPITest/LBHVerificationHubAPITest.csproj
 
-CMD dotnet test #./LBHVerificationHubAPITest/LBHVerificationHubAPITest.csproj
+CMD dotnet test 
+#./LBHVerificationHubAPITest/LBHVerificationHubAPITest.csproj
 
