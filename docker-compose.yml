@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  lbhverificationhubapi:
+    image: lbhverificationhubapi
+    build:
+      context: LBHVerificationHubAPI/
+      dockerfile: ./Dockerfile
+    ports:
+      - 9010:80
+
+  lbhverificationhubapitest:
+    image: lbhverificationhubapitest
+    build:
+      context: .
+      dockerfile: LBHVerificationHubAPITest/Dockerfile
