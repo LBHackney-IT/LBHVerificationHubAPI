@@ -42,8 +42,10 @@ namespace LBHVerificationHubAPI
             var settings = Configuration.Get<ConfigurationSettings>();
 
             var clearCoreUrl = Environment.GetEnvironmentVariable("ClearCoreWebService");
+            var clearCoreUsername = Environment.GetEnvironmentVariable("ClearCoreUsername");
+            var clearCorePassword = Environment.GetEnvironmentVariable("ClearCorePassword");
 
-            services.ConfigureClearCore(clearCoreUrl);
+            services.ConfigureClearCore(clearCoreUrl, clearCoreUsername, clearCorePassword);
 
 
 

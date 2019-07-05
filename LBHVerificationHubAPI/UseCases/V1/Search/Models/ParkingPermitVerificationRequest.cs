@@ -10,13 +10,13 @@ namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
     public class ParkingPermitVerificationRequest : IRequest
     {
         
-        [ClearCoreProperty(AlternativeFieldName = "NAME_FIRST_NAME")]
+        [ClearCoreProperty(AlternativeFieldName = "FORENAME")]
         public string ForeName { get; set; }
 
-        [ClearCoreProperty(AlternativeFieldName = "NAME_SURNAME")]
+        [ClearCoreProperty(AlternativeFieldName = "SURNAME")]
         public string Surname { get; set; }
 
-        [ClearCoreProperty(AlternativeFieldName = "ADDR_POBOX")]
+        [ClearCoreProperty(AlternativeFieldName = "UPRN")]
         public string UPRN { get; set; }
 
         [ClearCoreProperty(AlternativeFieldName = "DOB")]

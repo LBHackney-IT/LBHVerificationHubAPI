@@ -17,10 +17,17 @@ namespace LBHVerificationHubAPI.Gateways.V1
     {
         private readonly string _clearCoreURL;
         private readonly IClearCoreSoapChannel _clearCoreSoapChannel;
+        private readonly IClearCoreSoap _clearCoreSoap;
 
         public ClearCoreGateway(IClearCoreSoapChannel clearCoreSoapChannel , string ClearCoreURL)
         {
             _clearCoreSoapChannel = clearCoreSoapChannel;
+            _clearCoreURL = ClearCoreURL;
+        }
+
+        public ClearCoreGateway(IClearCoreSoap clearCoreSoap, string ClearCoreURL)
+        {
+            _clearCoreSoap = clearCoreSoap;
             _clearCoreURL = ClearCoreURL;
         }
 
@@ -33,12 +40,13 @@ namespace LBHVerificationHubAPI.Gateways.V1
         public async Task<ClearCoreResponse> Verify(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
         {
             ScvQueryDef queryDefinition = QueryHelper.CreateQueryDefinition(request);
-            
-            ScvQueryResult results = await _clearCoreSoapChannel.ScvQueryRecords2Async(queryDefinition).ConfigureAwait(false);
-            if(_clearCoreSoapChannel.State != System.ServiceModel.CommunicationState.Closed)
-            {
-                _clearCoreSoapChannel.Close();
-            }
+
+            //ScvQueryResult results = await _clearCoreSoapChannel.ScvQueryRecords2Async(queryDefinition).ConfigureAwait(false);
+            ScvQueryResult results = await _clearCoreSoap.ScvQueryRecords2Async(queryDefinition).ConfigureAwait(false);
+            //if (_clearCoreSoapChannel.State != System.ServiceModel.CommunicationState.Closed)
+            //{
+            //    _clearCoreSoapChannel.Close();
+            //}
 
             ClearCoreResponse response = QueryHelper.CreateResponse(results);
 
