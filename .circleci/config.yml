@@ -55,7 +55,6 @@ jobs:
           name: Run tests
           command: docker-compose run lbhverificationhubapitest
 
-
   deploy-to-staging:
     docker:
       - image: circleci/python:3.7
