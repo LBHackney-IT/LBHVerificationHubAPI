@@ -51,6 +51,10 @@ jobs:
       - run:
           name: build
           command: docker-compose build lbhverificationhubapitest
+      - run:
+          name: Run tests
+          command: docker-compose run lbhaddressesapitest
+
 
   deploy-to-staging:
     docker:
