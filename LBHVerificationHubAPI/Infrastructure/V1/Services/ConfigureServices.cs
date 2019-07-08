@@ -31,7 +31,10 @@ namespace LBHVerificationHubAPI.Infrastructure.V1.Services
 
             services.AddTransient<IClearCoreSoap>(s =>
             {
-                return new ClearCoreSoapClient(clearCoreUrl, new System.TimeSpan(0, 0, 30), username, password);
+                ClearCoreSoapClient c = new ClearCoreSoapClient(clearCoreUrl, new System.TimeSpan(0, 0, 30), username, password);
+                c.ClientCredentials.UserName.UserName = username;
+                c.ClientCredentials.UserName.Password = password; 
+                return c ;
             });
 
         }
