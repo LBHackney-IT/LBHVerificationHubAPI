@@ -11,7 +11,7 @@ namespace LBHVerificationHubAPI.Helpers
 
         public const string CLEARCORE_DATAMAP_NAME = "DM";
         public const string CLEARCORE_FEED_NAME = "SearchObjects";
-        public const string CLEARCORE_MATCH_RULESET_NAME = "Ruleset";
+        public const string CLEARCORE_MATCH_RULESET_NAME = "Query";
         public const string CLEARCORE_PROJECT_NAME = "VERIFICATION_HUB";
     }
 }

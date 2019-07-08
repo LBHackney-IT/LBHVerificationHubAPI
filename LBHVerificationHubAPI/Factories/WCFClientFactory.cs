@@ -15,7 +15,8 @@ namespace LBHVerificationHubAPI.Factories
         /// <returns></returns>
         public T CreateClient<T>(string endpoint)
         {
-            var myBinding = new BasicHttpBinding();
+            var myBinding = new BasicHttpsBinding();
+            myBinding.Security.Mode = BasicHttpsSecurityMode.Transport;
             var myEndpoint = new EndpointAddress(endpoint);
             var myChannelFactory = new ChannelFactory<T>(myBinding, myEndpoint);
             T channel = myChannelFactory.CreateChannel();
