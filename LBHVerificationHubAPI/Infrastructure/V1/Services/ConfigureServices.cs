@@ -33,7 +33,10 @@ namespace LBHVerificationHubAPI.Infrastructure.V1.Services
             {
                 ClearCoreSoapClient c = new ClearCoreSoapClient(clearCoreUrl, new System.TimeSpan(0, 0, 30), username, password);
                 c.ClientCredentials.UserName.UserName = username;
-                c.ClientCredentials.UserName.Password = password; 
+                c.ClientCredentials.UserName.Password = password;
+                c.ClientCredentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
+                //c.ClientCredentials.ClientCertificate.Certificate = new System.Security.Cryptography.X509Certificates.X509Certificate2(@"C:\Users\mkeyworth\Source\Repos\LBHVerificationHubAPI\LBHVerificationHubAPI\VHub.pem");
+                //c.ClientCredentials.ClientCertificate.Certificate = new System.Security.Cryptography.X509Certificates.X509Certificate2("VHub.pem");
                 return c ;
             });
 
