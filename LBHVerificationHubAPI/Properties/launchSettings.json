@@ -13,9 +13,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ClearCoreWebService": "http://lbhindexappd01.ad.hackney.gov.uk:8888/ClearCore",
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ClearCore_SENTRY_URL": "https://57a2e60871b04015a71f57e4ff889f1b@sentry.io/1432085"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "HackneyesAPI": {

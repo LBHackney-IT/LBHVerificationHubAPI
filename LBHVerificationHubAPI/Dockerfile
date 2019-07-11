@@ -19,6 +19,14 @@ ENV CORECLR_ENABLE_PROFILING=1 \
 
 COPY newrelic ./newrelic
 
+#COPY VHub.pem /etc/ssl/certs/VHub.pem
+
 CMD ASPNETCORE_URLS=http://+:${PORT:-80} dotnet ./out/LBHVerificationHubAPI.dll
+
+ARG CLEAR_CORE_CERTIFICATE
+
+RUN cd /etc/ssl/certs
+RUN echo ${CLEAR_CORE_CERTIFICATE}
+RUN echo ${CLEAR_CORE_CERTIFICATE} > VHub.pem
 
 EXPOSE ${PORT:-80}
