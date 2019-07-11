@@ -85,7 +85,7 @@ workflows:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           region: AWS_REGION
           tag: "${CIRCLE_SHA1}"
-          extra-build-args: "--build-arg CLEAR_CORE_CERTIFICATE=${CLEAR_CORE_CERTIFICATE}"
+          extra-build-args: "--build-arg CLEAR_CORE_CERTIFICATE='${CLEAR_CORE_CERTIFICATE}'"
           filters:
             branches:
               only: master
