@@ -31,6 +31,6 @@ RUN cd /etc/ssl/certs
 
 RUN echo ${CLEAR_CORE_CERTIFICATE} > VHub.pem
 
-RUN echo ${CLEAR_CORE_IP} ${CLEAR_CORE_FQDN} > /etc/hosts; ping -c 4 ${CLEAR_CORE_FQDN}
+RUN echo ${CLEAR_CORE_IP} ${CLEAR_CORE_FQDN} > /etc/hosts
 
 EXPOSE ${PORT:-80}
