@@ -24,9 +24,13 @@ COPY newrelic ./newrelic
 CMD ASPNETCORE_URLS=http://+:${PORT:-80} dotnet ./out/LBHVerificationHubAPI.dll
 
 ARG CLEAR_CORE_CERTIFICATE
+ARG CLEAR_CORE_IP
+ARG CLEAR_CORE_FQDN
 
 RUN cd /etc/ssl/certs
-RUN echo ${CLEAR_CORE_CERTIFICATE}
+
 RUN echo ${CLEAR_CORE_CERTIFICATE} > VHub.pem
+
+RUN echo ${CLEAR_CORE_IP} ${CLEAR_CORE_FQDN} > /etc/hosts; ping -c 4 ${CLEAR_CORE_FQDN}
 
 EXPOSE ${PORT:-80}
