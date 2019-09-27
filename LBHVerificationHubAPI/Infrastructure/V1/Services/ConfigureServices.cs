@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Security;
 using System.Threading.Tasks;
 
 namespace LBHVerificationHubAPI.Infrastructure.V1.Services
@@ -37,6 +38,12 @@ namespace LBHVerificationHubAPI.Infrastructure.V1.Services
                 c.ClientCredentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
                 //c.ClientCredentials.ClientCertificate.Certificate = new System.Security.Cryptography.X509Certificates.X509Certificate2(@"C:\Users\mkeyworth\Source\Repos\LBHVerificationHubAPI\LBHVerificationHubAPI\VHub.pem");
                 //c.ClientCredentials.ClientCertificate.Certificate = new System.Security.Cryptography.X509Certificates.X509Certificate2("VHub.pem");
+                c.ClientCredentials.ServiceCertificate.SslCertificateAuthentication =
+                    new X509ServiceCertificateAuthentication()
+                    {
+                        CertificateValidationMode = X509CertificateValidationMode.None,
+                        RevocationMode = System.Security.Cryptography.X509Certificates.X509RevocationMode.NoCheck
+                    };
                 return c ;
             });
 
