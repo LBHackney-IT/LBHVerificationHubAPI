@@ -19,5 +19,5 @@ ENV CORECLR_ENABLE_PROFILING=1 \
 
 COPY newrelic ./newrelic
 
-CMD ASPNETCORE_URLS=http://+:${PORT:-80} dotnet ./out/LBHVerificationHubAPI.dll
-EXPOSE ${PORT:-80}
+CMD ASPNETCORE_URLS=http://+:${PORT:-3000} dotnet ./out/LBHVerificationHubAPI.dll
+EXPOSE ${PORT:-3000}
