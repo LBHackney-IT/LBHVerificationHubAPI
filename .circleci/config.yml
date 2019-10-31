@@ -60,7 +60,7 @@ jobs:
       - image: circleci/python:3.7
     steps:
       - deploy-env:
-          service-name: 'verificationhub-api-staging'
+          service-name: 'verification-api-staging'
           image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
 
   deploy-to-production:
@@ -68,7 +68,7 @@ jobs:
       - image: circleci/python:3.7
     steps:
       - deploy-env:
-          service-name: 'verificationhub-api-production'
+          service-name: 'verification-api-production'
           image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
 
 workflows:
