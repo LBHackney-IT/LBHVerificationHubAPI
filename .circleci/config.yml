@@ -82,7 +82,7 @@ workflows:
             branches:
               only: master
 
-       - deploy-to-staging:
+      - deploy-to-staging:
           requires:
             - check
             - build_and_push_image
