@@ -8,39 +8,30 @@ commands:
   deploy-env:
     description: "Sets up aws cli and ecs-deploy to update a service with a target docker image"
     parameters:
+      cluster-name:
+        type: string
       service-name:
         type: string
-      image-name:
+      image-tag:
         type: string
     steps:
-      - aws-cli/install
-      - aws-cli/configure:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-region: AWS_REGION
-      - run:
-          name: Install jq
-          command: |
-            sudo apt update
-            sudo apt install jq
       - run:
           name: Install ecs deploy
           command: |
-              curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee /usr/bin/ecs-deploy
-              sudo chmod +x /usr/bin/ecs-deploy
+            sudo pip install ecs-deploy
       - run:
-          name: Promote target image
+          name: Premote target image
           command: |
-            ecs-deploy \
-            --timeout 104400 \
+            ecs deploy \
+            --no-deregister \
+            --access-key-id $AWS_ACCESS_KEY_ID \
+            --secret-access-key $AWS_SECRET_ACCESS_KEY \
+            --timeout 1800 \
             --region $AWS_REGION \
-            --cluster $ECS_STAGING_CLUSTER \
-            --service-name << parameters.service-name >> \
-            --image << parameters.image-name >> \
-            --timeout 104400 \
-            --use-latest-task-def
-          no_output_timeout: 30m
-
+            << parameters.cluster-name >> \
+            << parameters.service-name >> \
+            -t << parameters.image-tag >>
+          no_output_timeout: 30m    
 jobs:
   check:
     docker:
@@ -54,22 +45,33 @@ jobs:
       - run:
           name: Run tests
           command: docker-compose run lbhverificationhubapitest
+  
+  deploy-to-development:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - deploy-env:
+          cluster-name: 'hackney-apps-development'
+          service-name: 'verification-api-development'
+          image-tag: "$CIRCLE_SHA1"
 
   deploy-to-staging:
     docker:
       - image: circleci/python:3.7
     steps:
       - deploy-env:
+          cluster-name: 'hackney-apps-staging'
           service-name: 'verification-api-staging'
-          image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
+          image-tag: "$CIRCLE_SHA1"
 
   deploy-to-production:
     docker:
       - image: circleci/python:3.7
     steps:
       - deploy-env:
+          cluster-name: 'ecs-hackney-apps'
           service-name: 'verification-api-production'
-          image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
+          image-tag: "$CIRCLE_SHA1"
 
 workflows:
   build-and-deploy:
@@ -85,15 +87,29 @@ workflows:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           region: AWS_REGION
           tag: "${CIRCLE_SHA1}"
-          extra-build-args: "--build-arg CLEAR_CORE_CERTIFICATE='${CLEAR_CORE_CERTIFICATE}' --build-arg CLEAR_CORE_FQDN='${CLEAR_CORE_FQDN}' --build-arg CLEAR_CORE_IP='${CLEAR_CORE_IP}'"
+          filters:
+            branches:
+              only: master
+
+      - deploy-to-development:
+          requires:
+            - check
+            - build_and_push_image
+          filters:
+            branches:
+              only: master
+
+      - permit-staging-release:
+          type: approval
+          requires:
+            - deploy-to-development
           filters:
             branches:
               only: master
 
       - deploy-to-staging:
           requires:
-            - check
-            - build_and_push_image
+            - permit-staging-release
           filters:
             branches:
               only: master
