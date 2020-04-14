@@ -12,7 +12,5 @@ namespace LBHVerificationHubAPI.UseCases.V1.Search.Models
     {  
         public bool Verified { get; set; }
         public string VerificationAuditID { get;set; }
-        public List<string> MatchAudits { get; set; }
-        public List<string> LateMatchAudits { get; set; }
     }
 }
