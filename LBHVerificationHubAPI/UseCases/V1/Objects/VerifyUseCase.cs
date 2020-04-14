@@ -34,13 +34,16 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
                 throw new BadRequestException(validationResponse);
 
             var response = await _Gateway.Verify(request, cancellationToken).ConfigureAwait(false);
+            var lateMatches = await _Gateway.GetLateMatchAudits(response.matchAudits[0]);
 
             if (response == null)
                 return new ParkingPermitVerificationResponse();
             var useCaseResponse = new ParkingPermitVerificationResponse
             {
                 Verified = response.verified,
-                VerificationAuditID = response.VerificationAuditID
+                VerificationAuditID = response.VerificationAuditID,
+                MatchAudits = response.matchAudits,
+                LateMatchAudits = lateMatches
             };
 
 
