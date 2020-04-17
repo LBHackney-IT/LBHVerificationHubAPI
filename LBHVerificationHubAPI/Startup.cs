@@ -17,6 +17,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using LBHVerificationHubAPI.Infrastructure.V1.Services;
 using LBHVerificationHubAPI.Infrastructure.V1.Middleware;
 using System.Configuration;
+using LBHVerificationHubAPI.Gateways.V1;
+using LBHVerificationHubAPI.Infrastructure.V1.Context;
 
 namespace LBHVerificationHubAPI
 {
@@ -73,6 +75,9 @@ namespace LBHVerificationHubAPI
                 var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, @"LBHVerificationHubAPI.xml");
                 c.IncludeXmlComments(filePath);
             });
+
+            services.AddSingleton<IVerdictDbContext, VerdictDbContext>();
+            services.AddSingleton<IVerdictDbGateway, VerdictDbGateway>();
 
             services.AddCustomServices();
 
