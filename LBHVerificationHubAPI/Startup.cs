@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using LBHVerificationHubAPI.Helpers;
-using LBHVerificationHubAPI.Interfaces;
-using LBHVerificationHubAPI.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 using LBHVerificationHubAPI.Infrastructure.V1.Services;
@@ -19,6 +13,8 @@ using LBHVerificationHubAPI.Infrastructure.V1.Middleware;
 using System.Configuration;
 using LBHVerificationHubAPI.Gateways.V1;
 using LBHVerificationHubAPI.Infrastructure.V1.Context;
+using LBHVerificationHubAPI.UseCases.V1;
+using LBHVerificationHubAPI.UseCases.V1.Search;
 
 namespace LBHVerificationHubAPI
 {
@@ -49,8 +45,6 @@ namespace LBHVerificationHubAPI
 
             services.ConfigureClearCore(clearCoreUrl, clearCoreUsername, clearCorePassword);
 
-
-
             services.AddMvc();
             services.AddSwaggerGen(c =>
             {
@@ -68,19 +62,25 @@ namespace LBHVerificationHubAPI
                     {"Token", Enumerable.Empty<string>()}
                 });
 
-                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "LBH Verification Hub API", Version = "v1" });
+                c.SwaggerDoc("v1",
+                    new Swashbuckle.AspNetCore.Swagger.Info {Title = "LBH Verification Hub API", Version = "v1"});
 
                 c.DescribeAllEnumsAsStrings();
 
-                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, @"LBHVerificationHubAPI.xml");
+                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath,
+                    @"LBHVerificationHubAPI.xml");
                 c.IncludeXmlComments(filePath);
             });
 
+            // Register Database Context and Gateway
             services.AddSingleton<IVerdictDbContext, VerdictDbContext>();
             services.AddSingleton<IVerdictDbGateway, VerdictDbGateway>();
 
-            services.AddCustomServices();
+            // Register Use Cases
+            services.AddSingleton<IGetLateMatchAuditsUseCase, GetLateMatchAuditsUseCase>();
+            services.AddSingleton<ISaveVerdictUseCase, SaveVerdictUseCase>();
 
+            services.AddCustomServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,7 +103,6 @@ namespace LBHVerificationHubAPI
                 c.SwaggerEndpoint("v1/swagger.json", "Hackney Verification Hub API v1");
                 c.RoutePrefix = "swagger";
             });
-            
 
             app.UseMvc();
         }

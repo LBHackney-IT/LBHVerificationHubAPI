@@ -10,17 +10,17 @@ namespace LBHVerificationHubAPI.Domain
         /// The approximate time the verdict Write request was made.
         /// </summary>
         public DateTime GeneratedAt;
-        
+
         /// <summary>
         /// The Unique Property Reference Number for which the verification request was made.
         /// </summary>
         public string Uprn;
-        
+
         /// <summary>
         /// Whether the information provided in the verification request was verified or not.
         /// </summary>
         public bool Verified;
-        
+
         /// <summary>
         /// The unique ID of the Verdict, to be queried against on the database.
         /// Is required where Verified == true.
@@ -33,8 +33,8 @@ namespace LBHVerificationHubAPI.Domain
         public ParkingPermitVerificationRequest Request;
 
         /// <summary>
-        /// The (more) human-readable description of a late match audit for the validation.
+        /// The (more) human-readable description of the late match audits for the validation.
         /// </summary>
-        public List<string> LateMatchAudit;
+        public List<string> LateMatchAudits { get; set; }
     }
 }
