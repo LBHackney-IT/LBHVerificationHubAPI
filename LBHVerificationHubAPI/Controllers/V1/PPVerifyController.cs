@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LBHVerificationHubAPI.UseCases.V1.Objects;
-using LBHVerificationHubAPI.Models;
 using LBHVerificationHubAPI.Infrastructure.V1.API;
 using LBHVerificationHubAPI.Extensions.Controller;
 using LBHVerificationHubAPI.UseCases.V1.Search.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Amazon.DynamoDBv2;
-using Amazon.SimpleNotificationService.Model;
+using LBHVerificationHubAPI.Boundary.V1;
 using LBHVerificationHubAPI.Extensions.String;
-using LBHVerificationHubAPI.Infrastructure.V1.Exceptions;
 using LBHVerificationHubAPI.UseCases.V1;
 using LBHVerificationHubAPI.UseCases.V1.Search;
 using Microsoft.Extensions.Logging;
@@ -27,19 +24,22 @@ namespace LBHVerificationHubAPI.Controllers.V1
     public class PPVerifyController : BaseController
     {
         private readonly IVerifyUseCase _verifyUseCase;
-        private readonly ISaveVerdictUseCase _verdictUseCase;
+        private readonly ISaveVerdictUseCase _saveVerdictUseCase;
+        private readonly IRetrieveVerdictUseCase _retrieveVerdictUseCase;
         private readonly IGetLateMatchAuditsUseCase _lateMatchAuditsUseCase;
 
         private readonly ILogger<PPVerifyController> _logger;
 
         public PPVerifyController(
             IVerifyUseCase verifyUseCase,
-            ISaveVerdictUseCase verdictUseCase,
+            ISaveVerdictUseCase saveVerdictUseCase,
+            IRetrieveVerdictUseCase retrieveVerdictUseCase,
             IGetLateMatchAuditsUseCase lateMatchAuditsUseCase,
             ILogger<PPVerifyController> logger)
         {
             _verifyUseCase = verifyUseCase;
-            _verdictUseCase = verdictUseCase;
+            _saveVerdictUseCase = saveVerdictUseCase;
+            _retrieveVerdictUseCase = retrieveVerdictUseCase;
             _lateMatchAuditsUseCase = lateMatchAuditsUseCase;
 
             _logger = logger;
@@ -62,23 +62,21 @@ namespace LBHVerificationHubAPI.Controllers.V1
                 lateMatchAudits = await _lateMatchAuditsUseCase
                     .ExecuteAsync(clearCoreResponse.matchAudits);
 
-            var verdictGuid = await _verdictUseCase
+            var verdictGuid = await _saveVerdictUseCase
                 .ExecuteAsync(clearCoreResponse, request, lateMatchAudits);
 
             var prettyRequestDict = string.Join("\n", request.GetQueryDict()
                 .Select(m => $"  {m.Key}: {m.Value}"));
             if (clearCoreResponse.verified)
-            {
                 _logger.LogInformation(
                     "\n" +
                     $"Query at {DateTime.Now}:" + '\n' +
                     prettyRequestDict + "\n\n" +
-                    "Audit returned:" + '\n' +
-                    $"  {lateMatchAudits}" + "\n\n" +
+                    "Audits returned:" + '\n' +
+                    $"  {String.Join('\n', lateMatchAudits)}" + "\n\n" +
                     "Database Verdict Guid:" + '\n' +
                     $"  {verdictGuid}" + "\n\n"
                 );
-            }
 
             return HandleResponse(
                 new ParkingPermitVerificationResponse
@@ -89,6 +87,13 @@ namespace LBHVerificationHubAPI.Controllers.V1
                         : new string($"(Not Verified) Logged with Guid: {verdictGuid.ToString()}"),
                 }
             );
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(APIResponse<VerdictResponse>), 200)]
+        public async Task<IActionResult> GetVerdict([FromBody] [Required] VerdictRequest request)
+        {
+            return HandleResponse(await _retrieveVerdictUseCase.ExecuteAsync(request));
         }
     }
 }
