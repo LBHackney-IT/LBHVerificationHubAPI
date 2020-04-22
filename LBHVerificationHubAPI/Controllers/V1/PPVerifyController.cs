@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LBHVerificationHubAPI.UseCases.V1.Objects;
@@ -8,6 +9,12 @@ using LBHVerificationHubAPI.Extensions.Controller;
 using LBHVerificationHubAPI.UseCases.V1.Search.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Amazon.DynamoDBv2;
+using Amazon.SimpleNotificationService.Model;
+using LBHVerificationHubAPI.Extensions.String;
+using LBHVerificationHubAPI.Infrastructure.V1.Exceptions;
+using LBHVerificationHubAPI.UseCases.V1;
+using LBHVerificationHubAPI.UseCases.V1.Search;
 using Microsoft.Extensions.Logging;
 
 namespace LBHVerificationHubAPI.Controllers.V1
@@ -20,11 +27,21 @@ namespace LBHVerificationHubAPI.Controllers.V1
     public class PPVerifyController : BaseController
     {
         private readonly IVerifyUseCase _verifyUseCase;
+        private readonly ISaveVerdictUseCase _verdictUseCase;
+        private readonly IGetLateMatchAuditsUseCase _lateMatchAuditsUseCase;
+
         private readonly ILogger<PPVerifyController> _logger;
 
-        public PPVerifyController(IVerifyUseCase VerifyUseCase, ILogger<PPVerifyController> logger)
+        public PPVerifyController(
+            IVerifyUseCase verifyUseCase,
+            ISaveVerdictUseCase verdictUseCase,
+            IGetLateMatchAuditsUseCase lateMatchAuditsUseCase,
+            ILogger<PPVerifyController> logger)
         {
-            _verifyUseCase = VerifyUseCase;
+            _verifyUseCase = verifyUseCase;
+            _verdictUseCase = verdictUseCase;
+            _lateMatchAuditsUseCase = lateMatchAuditsUseCase;
+
             _logger = logger;
         }
 
@@ -36,24 +53,42 @@ namespace LBHVerificationHubAPI.Controllers.V1
         [ProducesResponseType(typeof(APIResponse<ParkingPermitVerificationResponse>), 200)]
         public async Task<IActionResult> Verify([FromBody] [Required] ParkingPermitVerificationRequest request)
         {
-            var (response, matchDescription) = await _verifyUseCase
-                .ExecuteAsync(request, HttpContext.GetCancellationToken()).ConfigureAwait(false);
+            var clearCoreResponse = await _verifyUseCase
+                .ExecuteAsync(request, HttpContext.GetCancellationToken());
 
-            var queryDictString = string.Join("\n", request.GetQueryDict()
+            var lateMatchAudits = new List<string>();
+
+            if (clearCoreResponse.matchAudits != null)
+                lateMatchAudits = await _lateMatchAuditsUseCase
+                    .ExecuteAsync(clearCoreResponse.matchAudits);
+
+            var verdictGuid = await _verdictUseCase
+                .ExecuteAsync(clearCoreResponse, request, lateMatchAudits);
+
+            var prettyRequestDict = string.Join("\n", request.GetQueryDict()
                 .Select(m => $"  {m.Key}: {m.Value}"));
-
-            if (response.Verified)
+            if (clearCoreResponse.verified)
             {
                 _logger.LogInformation(
                     "\n" +
-                    $"Query at {DateTime.Now}:" + "\n" +
-                    queryDictString + "\n\n" +
-                    "Audit returned:" + "\n" +
-                    $"  {matchDescription}" + "\n\n"
+                    $"Query at {DateTime.Now}:" + '\n' +
+                    prettyRequestDict + "\n\n" +
+                    "Audit returned:" + '\n' +
+                    $"  {lateMatchAudits}" + "\n\n" +
+                    "Database Verdict Guid:" + '\n' +
+                    $"  {verdictGuid}" + "\n\n"
                 );
             }
 
-            return HandleResponse(response);
+            return HandleResponse(
+                new ParkingPermitVerificationResponse
+                {
+                    Verified = clearCoreResponse.verified,
+                    VerificationAuditID = clearCoreResponse.VerificationAuditID.IsNotNullOrEmptyOrWhiteSpace()
+                        ? clearCoreResponse.VerificationAuditID
+                        : new string($"(Not Verified) Logged with Guid: {verdictGuid.ToString()}"),
+                }
+            );
         }
     }
 }
