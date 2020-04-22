@@ -11,7 +11,7 @@ namespace LBHVerificationHubAPI.Infrastructure.V1.Context
     {
         public VerdictDbContext() : base(GetClient())
         {
-            // Do some checking to make sure DB is OK and if not, set it up?.
+            // TODO: Do some checking to make sure DB is OK and if not, set it up?.
         }
 
         private static AmazonDynamoDBClient GetClient()

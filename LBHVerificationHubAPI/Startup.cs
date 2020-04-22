@@ -77,8 +77,9 @@ namespace LBHVerificationHubAPI
             services.AddSingleton<IVerdictDbGateway, VerdictDbGateway>();
 
             // Register Use Cases
-            services.AddSingleton<IGetLateMatchAuditsUseCase, GetLateMatchAuditsUseCase>();
-            services.AddSingleton<ISaveVerdictUseCase, SaveVerdictUseCase>();
+            services.AddTransient<IGetLateMatchAuditsUseCase, GetLateMatchAuditsUseCase>();
+            services.AddTransient<ISaveVerdictUseCase, SaveVerdictUseCase>();
+            services.AddTransient<IRetrieveVerdictUseCase, RetrieveVerdictUseCase>();
 
             services.AddCustomServices();
         }
