@@ -11,7 +11,9 @@ using Moq;
 using Xunit;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Castle.Core.Logging;
 using LBHVerificationHubAPI.Infrastructure.V1.API;
+using Microsoft.Extensions.Logging;
 
 namespace LBHVerificationHubAPITest.Test.Controllers.V1
 {
@@ -23,19 +25,18 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
         public PPVerifyControllerTests()
         {
             _mock = new Mock<IVerifyUseCase>();
-            _classUnderTest = new PPVerifyController(_mock.Object);
+            _classUnderTest = new PPVerifyController(_mock.Object, new Logger<PPVerifyController>(new LoggerFactory()));
         }
 
         [Fact]
         public async Task GivenValidRequest_WhenCallingVerify_ThenShouldReturn200()
         {
             _mock.Setup(s => s.ExecuteAsync(It.IsAny<ParkingPermitVerificationRequest>(), CancellationToken.None))
-                .ReturnsAsync(new ParkingPermitVerificationResponse
-                {
-                });
+                .ReturnsAsync(new Tuple<ParkingPermitVerificationResponse, string>
+                    (new ParkingPermitVerificationResponse(), "")
+                );
             var request = new ParkingPermitVerificationRequest
             {
-
             };
 
             var response = await _classUnderTest.Verify(request).ConfigureAwait(false);
@@ -44,7 +45,6 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
             response.Should().BeOfType<ObjectResult>();
             var objectResult = response as ObjectResult;
             objectResult.StatusCode.Should().Be(200);
-
         }
 
         [Fact]
@@ -52,10 +52,9 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
         {
             //arrange
             _mock.Setup(s => s.ExecuteAsync(It.IsAny<ParkingPermitVerificationRequest>(), CancellationToken.None))
-                .ReturnsAsync(new ParkingPermitVerificationResponse
-                {
-                    
-                });
+                .ReturnsAsync(new Tuple<ParkingPermitVerificationResponse, string>
+                    (new ParkingPermitVerificationResponse(), "")
+                );
 
             var request = new ParkingPermitVerificationRequest
             {
@@ -69,6 +68,5 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
             var apiResponse = objectResult?.Value as APIResponse<ParkingPermitVerificationResponse>;
             apiResponse.Should().NotBeNull();
         }
-
     }
 }

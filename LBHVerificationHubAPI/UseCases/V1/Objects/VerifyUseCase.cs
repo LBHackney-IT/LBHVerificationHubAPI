@@ -21,7 +21,7 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
             _Gateway = Gateway;
         }
 
-        public async Task<ParkingPermitVerificationResponse> ExecuteAsync(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
+        public async Task<Tuple<ParkingPermitVerificationResponse,string>> ExecuteAsync(ParkingPermitVerificationRequest request, CancellationToken cancellationToken)
         {
 
             //validate
@@ -34,17 +34,24 @@ namespace LBHVerificationHubAPI.UseCases.V1.Objects
                 throw new BadRequestException(validationResponse);
 
             var response = await _Gateway.Verify(request, cancellationToken).ConfigureAwait(false);
-
+            
             if (response == null)
-                return new ParkingPermitVerificationResponse();
+                return new Tuple<ParkingPermitVerificationResponse, string>(new ParkingPermitVerificationResponse(), "");
+            
+            List<string> lateMatches = new List<string>();
+            if (response.matchAudits != null)
+                lateMatches = await _Gateway.GetLateMatchAudits(response.matchAudits[0]);
+            else
+                lateMatches.Append("NONE");
+
             var useCaseResponse = new ParkingPermitVerificationResponse
             {
                 Verified = response.verified,
-                VerificationAuditID = response.VerificationAuditID
+                VerificationAuditID = response.VerificationAuditID,
             };
 
 
-            return useCaseResponse;
+            return new Tuple<ParkingPermitVerificationResponse, string>(useCaseResponse, lateMatches.FirstOrDefault());
 
 
         }

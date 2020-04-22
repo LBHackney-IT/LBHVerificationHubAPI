@@ -69,8 +69,8 @@ namespace LBHVerificationHubAPITest.Test.UseCases.V1
         public async Task Given_ValidRequest_ThenShouldGiveValidResponse()
         {
             //arrange
-            var request = new ParkingPermitVerificationRequest() { ForeName = "forename", Surname = "surname", UPRN = "UPRN" };
-            ParkingPermitVerificationResponse response = await _classUnderTest.ExecuteAsync(request, CancellationToken.None);
+            var request = new ParkingPermitVerificationRequest() { ForeName = "VHUB", Surname = "TEST", UPRN = "100021021404" };
+            var (response, _) = await _classUnderTest.ExecuteAsync(request, CancellationToken.None);
 
             response.Should().NotBeNull();
             response.Should().BeOfType<ParkingPermitVerificationResponse>();
