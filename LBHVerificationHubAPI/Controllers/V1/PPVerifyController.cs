@@ -72,8 +72,8 @@ namespace LBHVerificationHubAPI.Controllers.V1
                     "\n" +
                     $"Query at {DateTime.Now}:" + '\n' +
                     prettyRequestDict + "\n\n" +
-                    "Audit returned:" + '\n' +
-                    $"  {lateMatchAudits}" + "\n\n" +
+                    "Audits returned:" + '\n' +
+                    $"  {String.Join('\n', lateMatchAudits)}" + "\n\n" +
                     "Database Verdict Guid:" + '\n' +
                     $"  {verdictGuid}" + "\n\n"
                 );
