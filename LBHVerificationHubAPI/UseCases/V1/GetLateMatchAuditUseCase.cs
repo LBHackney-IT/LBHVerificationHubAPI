@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LBHVerificationHubAPI.Gateways.V1;
 
-namespace LBHVerificationHubAPI.UseCases.V1.Search
+namespace LBHVerificationHubAPI.UseCases.V1
 {
     public class GetLateMatchAuditsUseCase : IGetLateMatchAuditsUseCase
     {
@@ -16,8 +16,7 @@ namespace LBHVerificationHubAPI.UseCases.V1.Search
 
         public async Task<List<string>> ExecuteAsync(List<string> matchAudits)
         {
-            var thing = await _clearCoreGateway.GetLateMatchAudits(matchAudits.FirstOrDefault());
-            return thing;
+            return await _clearCoreGateway.GetLateMatchAudits(matchAudits.FirstOrDefault());
         }
     }
 }

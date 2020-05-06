@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using LBHVerificationHubAPI.UseCases.V1.Search.Models;
 using System.Threading;
 using LBHVerificationHubAPI.Infrastructure.V1.Exceptions;
+using LBHVerificationHubAPI.UseCases.V1;
 using LBHVerificationHubAPI.UseCases.V1.Objects;
 
 namespace LBHVerificationHubAPITest.Test.UseCases.V1
@@ -24,13 +25,18 @@ namespace LBHVerificationHubAPITest.Test.UseCases.V1
             _fakeGateway = new Mock<IClearCoreGateway>();
 
             _classUnderTest = new VerifyUseCase(_fakeGateway.Object);
+            
+            _fakeGateway.Setup(s => s
+                .Verify(It.IsAny<ParkingPermitVerificationRequest>(), CancellationToken.None))
+                .ReturnsAsync(new ClearCoreResponse());
         }
 
         [Fact]
         public async Task GivenNullInput_WhenExecuteAsync_ThenShouldThrowBadRequestException()
         {
             ParkingPermitVerificationRequest request = null;
-            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+            await Assert.ThrowsAsync<BadRequestException>(async () =>
+                await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
         }
 
         [Fact]
@@ -38,42 +44,47 @@ namespace LBHVerificationHubAPITest.Test.UseCases.V1
         {
             //arrange
             var request = new ParkingPermitVerificationRequest();
-            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+            await Assert.ThrowsAsync<BadRequestException>(async () =>
+                await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
         }
 
         [Fact]
         public async Task Given_No_Forename_ThenShouldThrowBadRequestException()
         {
             //arrange
-            var request = new ParkingPermitVerificationRequest() { ForeName="", Surname="surname", UPRN="uprn" };
-            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+            var request = new ParkingPermitVerificationRequest() {ForeName = "", Surname = "surname", UPRN = "uprn"};
+            await Assert.ThrowsAsync<BadRequestException>(async () =>
+                await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
         }
 
         [Fact]
         public async Task Given_No_Surname_ThenShouldThrowBadRequestException()
         {
             //arrange
-            var request = new ParkingPermitVerificationRequest() { ForeName = "forename", Surname = "", UPRN = "uprn" };
-            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+            var request = new ParkingPermitVerificationRequest() {ForeName = "forename", Surname = "", UPRN = "uprn"};
+            await Assert.ThrowsAsync<BadRequestException>(async () =>
+                await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
         }
 
         [Fact]
         public async Task Given_No_UPRN_ThenShouldThrowBadRequestException()
         {
             //arrange
-            var request = new ParkingPermitVerificationRequest() { ForeName = "forename", Surname = "surname", UPRN = "" };
-            await Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
+            var request = new ParkingPermitVerificationRequest()
+                {ForeName = "forename", Surname = "surname", UPRN = ""};
+            await Assert.ThrowsAsync<BadRequestException>(async () =>
+                await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
         }
 
         [Fact]
         public async Task Given_ValidRequest_ThenShouldGiveValidResponse()
         {
-            //arrange
-            var request = new ParkingPermitVerificationRequest() { ForeName = "VHUB", Surname = "TEST", UPRN = "100021021404" };
-            var (response, _) = await _classUnderTest.ExecuteAsync(request, CancellationToken.None);
+            var request = new ParkingPermitVerificationRequest()
+                {ForeName = "VHUB", Surname = "TEST", UPRN = "100021021404"};
+            var clearCoreResponse = await _classUnderTest.ExecuteAsync(request, CancellationToken.None);
 
-            response.Should().NotBeNull();
-            response.Should().BeOfType<ParkingPermitVerificationResponse>();
+            clearCoreResponse.Should().NotBeNull();
+            clearCoreResponse.Should().BeOfType<ClearCoreResponse>();
         }
-    }       
+    }
 }

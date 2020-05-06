@@ -20,11 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Test\Gateways\V1\" />
-    <Folder Include="Test\Helpers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LBHVerificationHubAPI\LBHVerificationHubAPI.csproj" />
   </ItemGroup>
 

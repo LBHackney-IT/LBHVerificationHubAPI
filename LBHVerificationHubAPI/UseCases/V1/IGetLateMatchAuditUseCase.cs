@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LBHVerificationHubAPI.UseCases.V1.Search
+namespace LBHVerificationHubAPI.UseCases.V1
 {
     public interface IGetLateMatchAuditsUseCase
     {
