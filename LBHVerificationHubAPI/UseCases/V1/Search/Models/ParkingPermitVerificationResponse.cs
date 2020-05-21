@@ -2,7 +2,7 @@
 {
     public class ParkingPermitVerificationResponse 
     {  
-        public bool Verified { private get; set; }
-        public string VerificationAuditID { private get; set; }
+        public bool Verified { get; set; }
+        public string VerificationAuditID { get; set; }
     }
 }
