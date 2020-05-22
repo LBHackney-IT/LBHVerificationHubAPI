@@ -1,5 +1,4 @@
-﻿
-FROM microsoft/dotnet:latest
+﻿FROM mcr.microsoft.com/dotnet/core/sdk:2.2-alpine
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
