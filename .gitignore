@@ -263,3 +263,4 @@ __pycache__/
 *.pyc
 /LBHVerificationHubAPI/VHub.cer
 /LBHVerificationHubAPI/VHub.pem
+/LBHVerificationHubAPI/terraform/.terraform/
