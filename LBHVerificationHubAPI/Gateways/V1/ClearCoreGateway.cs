@@ -19,7 +19,7 @@ namespace LBHVerificationHubAPI.Gateways.V1
         private readonly IClearCoreSoapChannel _clearCoreSoapChannel;
         private readonly IClearCoreSoap _clearCoreSoap;
 
-        public ClearCoreGateway(IClearCoreSoapChannel clearCoreSoapChannel , string ClearCoreURL)
+        public ClearCoreGateway(IClearCoreSoapChannel clearCoreSoapChannel, string ClearCoreURL)
         {
             _clearCoreSoapChannel = clearCoreSoapChannel;
             _clearCoreURL = ClearCoreURL;
@@ -51,6 +51,14 @@ namespace LBHVerificationHubAPI.Gateways.V1
             ClearCoreResponse response = QueryHelper.CreateResponse(results);
 
             return response;
+        }
+        
+        public async Task<List<string>> GetLateMatchAudits(string matchAudits)
+        {
+            var audits = new List<string>();
+            audits.Add(await _clearCoreSoap.SCVXlateMatchAuditAsync(Helpers.GlobalConstants.CLEARCORE_PROJECT_NAME,
+                matchAudits));
+            return audits;
         }
     }
 }

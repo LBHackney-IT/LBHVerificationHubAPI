@@ -11,9 +11,7 @@ namespace LBHVerificationHubAPI.Models
     public class ClearCoreResponse
     {
         public bool verified { get; set; }
-
         public string VerificationAuditID { get; set; }
-
-
+        public List<string> matchAudits;
     }
 }

@@ -62,6 +62,7 @@ namespace LBHVerificationHubAPI.Helpers
             {
                 verified = true;
                 response.VerificationAuditID = SaveAuditDetails(results.m_matchAudits);
+                response.matchAudits = new List<string>(results.m_matchAudits);
             }
             else
             {
