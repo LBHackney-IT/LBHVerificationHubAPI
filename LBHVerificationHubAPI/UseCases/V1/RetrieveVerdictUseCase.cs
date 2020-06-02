@@ -16,9 +16,6 @@ namespace LBHVerificationHubAPI.UseCases.V1
 
         public async Task<VerdictResponse> ExecuteAsync(VerdictRequest request)
         {
-            Console.WriteLine(request.Guid);
-
-            Console.WriteLine($"Sending {request.Guid} to Use Case");
             var verdict = await _verdictDbGateway.FetchVerdict(request.Guid);
             
             return new VerdictResponse

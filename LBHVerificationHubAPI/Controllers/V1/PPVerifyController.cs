@@ -84,7 +84,7 @@ namespace LBHVerificationHubAPI.Controllers.V1
                     Verified = clearCoreResponse.verified,
                     VerificationAuditID = clearCoreResponse.VerificationAuditID.IsNotNullOrEmptyOrWhiteSpace()
                         ? clearCoreResponse.VerificationAuditID
-                        : new string($"(Not Verified) Logged with Guid: {verdictGuid.ToString()}"),
+                        : verdictGuid.ToString()
                 }
             );
         }

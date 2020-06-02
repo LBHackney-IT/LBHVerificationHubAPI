@@ -22,10 +22,7 @@ namespace LBHVerificationHubAPI.Gateways.V1
         public async Task AppendVerdict(Verdict verdict) =>
             await _verdictDbContext.SaveAsync(verdict, _dbConfig);
 
-        public async Task<Verdict> FetchVerdict(Guid verdictGuid)
-        {
-            Console.WriteLine($"Requesting {verdictGuid} from Context");
-            return await _verdictDbContext.LoadAsync<Verdict>(verdictGuid, _dbConfig);
-        }
+        public async Task<Verdict> FetchVerdict(Guid verdictGuid) => 
+            await _verdictDbContext.LoadAsync<Verdict>(verdictGuid, _dbConfig);
     }
 }
