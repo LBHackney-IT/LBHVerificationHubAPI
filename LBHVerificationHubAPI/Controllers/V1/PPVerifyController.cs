@@ -90,9 +90,14 @@ namespace LBHVerificationHubAPI.Controllers.V1
         }
 
         [HttpGet]
+        [Route("/api/v1/verificationhub/parkingpermitverification/verdict/{guid}")]
         [ProducesResponseType(typeof(APIResponse<VerdictResponse>), 200)]
-        public async Task<IActionResult> GetVerdict([FromBody] [Required] VerdictRequest request)
+        public async Task<IActionResult> GetVerdict([FromRoute] Guid guid)
         {
+            var request = new VerdictRequest
+            {
+                Guid = guid
+            };
             return HandleResponse(await _retrieveVerdictUseCase.ExecuteAsync(request));
         }
     }

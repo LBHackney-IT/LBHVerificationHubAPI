@@ -91,7 +91,7 @@ namespace LBHVerificationHubAPITest.Test.Controllers.V1
                 .ReturnsAsync(new VerdictResponse {Verdict = verdict});
             
             //Act
-            var response = await _classUnderTest.GetVerdict(verdictRequest);
+            var response = await _classUnderTest.GetVerdict(verdictRequest.Guid);
 
             //Assert
             response.Should().NotBeNull();
