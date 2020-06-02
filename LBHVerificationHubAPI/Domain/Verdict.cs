@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Amazon.DynamoDBv2.DataModel;
 using LBHVerificationHubAPI.UseCases.V1.Search.Models;
 
 namespace LBHVerificationHubAPI.Domain
@@ -25,6 +26,7 @@ namespace LBHVerificationHubAPI.Domain
         /// The unique ID of the Verdict, to be queried against on the database.
         /// Is required where Verified == true.
         /// </summary>
+        [DynamoDBHashKey]
         public Guid VerdictId;
 
         /// <summary>
