@@ -27,7 +27,6 @@ namespace LBHVerificationHubAPI
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseSentry(Environment.GetEnvironmentVariable("ClearCore_SENTRY_URL"))
                 .UseStartup<Startup>()
                 .Build();
     }
